@@ -402,16 +402,16 @@
             position: absolute;
             bottom: 80px;
             right: 0;
-            width: 420px;
+            width: 400px;
             max-width: calc(100vw - 4rem);
-            height: 620px;
-            background: #0e0e10;
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            height: 600px;
+            background: rgba(20, 20, 20, 0.98);
+            border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
             display: none;
             flex-direction: column;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7);
-            overflow: hidden;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .chat-window.active {
@@ -420,246 +420,225 @@
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* --- New chat inner styles --- */
         .chat-header {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid rgba(212,175,55,0.15);
-            background: #0a0a0a;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-        }
-
-        .chat-status-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--gold);
-            box-shadow: 0 0 8px var(--gold);
-            animation: chatPulse 2.4s ease-in-out infinite;
-            flex-shrink: 0;
-        }
-
-        @keyframes chatPulse {
-            0%,100% { opacity:1; } 50% { opacity:0.35; }
         }
 
         .chat-header h3 {
             font-family: 'Crimson Pro', serif;
             color: var(--gold);
-            font-size: 1.15rem;
-            font-weight: 400;
-            flex: 1;
+            font-size: 1.3rem;
         }
 
         .chat-close {
             background: none;
             border: none;
-            color: rgba(255,255,255,0.5);
-            font-size: 1.4rem;
+            color: var(--white);
+            font-size: 1.5rem;
             cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s;
+            transition: color 0.3s ease;
         }
 
-        .chat-close:hover { color: var(--gold); }
+        .chat-close:hover {
+            color: var(--gold);
+        }
 
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 1.25rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            scroll-behavior: smooth;
+            gap: 1rem;
         }
 
-        .chat-messages::-webkit-scrollbar { width: 4px; }
-        .chat-messages::-webkit-scrollbar-track { background: transparent; }
-        .chat-messages::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 4px; }
-
-        .chat-empty-state {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-align: center;
-            color: rgba(255,255,255,0.35);
-            padding: 1rem;
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .chat-empty-state .chat-empty-icon {
-            font-size: 2rem;
-            opacity: 0.4;
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(212, 175, 55, 0.1);
         }
 
-        .chat-empty-state p {
-            font-size: 0.82rem;
-            line-height: 1.5;
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 3px;
         }
 
-        .chat-quick-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            justify-content: center;
-            margin-top: 6px;
+        .message {
+            max-width: 80%;
+            padding: 1rem 1.2rem;
+            border-radius: 15px;
+            line-height: 1.6;
+            animation: messageSlide 0.3s ease-out;
         }
 
-        .chat-chip {
-            background: rgba(212,175,55,0.08);
-            border: 1px solid rgba(212,175,55,0.25);
-            color: var(--gold);
-            font-size: 0.72rem;
-            padding: 5px 10px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            transition: all 0.2s;
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .chat-chip:hover {
-            background: rgba(212,175,55,0.18);
-            border-color: var(--gold);
-        }
-
-        .chat-msg {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            animation: chatMsgIn 0.25s ease forwards;
-            opacity: 0;
-        }
-
-        @keyframes chatMsgIn {
-            from { opacity:0; transform:translateY(8px); }
-            to   { opacity:1; transform:translateY(0); }
-        }
-
-        .chat-msg.user  { align-items: flex-end; }
-        .chat-msg.ai    { align-items: flex-start; }
-
-        .chat-msg-label {
-            font-size: 0.62rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.3);
-        }
-
-        .chat-bubble {
-            max-width: 84%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            line-height: 1.65;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .chat-msg.user .chat-bubble {
+        .message.user {
+            align-self: flex-end;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--black);
-            border-bottom-right-radius: 4px;
         }
 
-        .chat-msg.ai .chat-bubble {
-            background: #18181c;
-            border: 1px solid rgba(212,175,55,0.15);
-            color: rgba(255,255,255,0.9);
-            border-bottom-left-radius: 4px;
+        .message.assistant {
+            align-self: flex-start;
+            background: rgba(51, 51, 51, 0.5);
+            color: var(--white);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        /* Typing */
-        .chat-typing {
-            display: none;
-            align-items: flex-start;
-            flex-direction: column;
-            gap: 4px;
-            padding: 0 1.25rem 0.5rem;
+        .message.thinking {
+            align-self: flex-start;
+            background: rgba(51, 51, 51, 0.5);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            font-style: italic;
         }
 
-        .chat-typing.visible { display: flex; }
-
-        .chat-typing-dots {
-            background: #18181c;
-            border: 1px solid rgba(212,175,55,0.15);
-            border-radius: 12px;
-            border-bottom-left-radius: 4px;
-            padding: 10px 14px;
+        .typing-indicator {
             display: flex;
-            gap: 5px;
-            align-items: center;
+            gap: 4px;
+            padding: 0.5rem;
         }
 
-        .chat-typing-dots span {
-            width: 6px; height: 6px;
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: var(--gold);
-            animation: chatBounce 1.2s ease-in-out infinite;
+            animation: typing 1.4s infinite;
         }
 
-        .chat-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .chat-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes chatBounce {
-            0%,80%,100% { transform:translateY(0); opacity:0.35; }
-            40% { transform:translateY(-5px); opacity:1; }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
         }
 
-        /* Input area */
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
         .chat-input-container {
-            padding: 0.85rem 1rem;
-            border-top: 1px solid rgba(212,175,55,0.15);
-            background: #0a0a0a;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
             display: flex;
-            gap: 8px;
-            align-items: flex-end;
+            gap: 0.8rem;
         }
 
         .chat-input {
             flex: 1;
-            background: #18181c;
-            border: 1px solid rgba(212,175,55,0.25);
-            border-radius: 12px;
-            padding: 10px 14px;
+            background: rgba(51, 51, 51, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 25px;
+            padding: 0.8rem 1.2rem;
             color: var(--white);
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.875rem;
+            font-size: 0.95rem;
             outline: none;
-            resize: none;
-            min-height: 40px;
-            max-height: 100px;
-            line-height: 1.5;
-            transition: border-color 0.2s;
-            overflow-y: auto;
+            transition: all 0.3s ease;
         }
 
-        .chat-input:focus { border-color: rgba(212,175,55,0.55); }
-        .chat-input::placeholder { color: rgba(255,255,255,0.3); }
+        .chat-input:focus {
+            border-color: var(--gold);
+            background: rgba(51, 51, 51, 0.7);
+        }
 
         .chat-send {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             border: none;
             color: var(--black);
-            width: 38px; height: 38px;
-            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.2s;
-            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
         }
 
-        .chat-send:hover { filter: brightness(1.1); }
-        .chat-send:active { transform: scale(0.93); }
-        .chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+        .chat-send:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Quick Topics */
+        .quick-topics {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .quick-topic-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-topic-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+        }
+
+        .setup-notice {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 1.5rem;
+            font-size: 0.9rem;
+            color: var(--gold-light);
+        }
+
+        .setup-notice strong {
+            color: var(--gold);
+        }
 
         /* Footer */
         footer {
@@ -1096,36 +1075,33 @@
         <button class="chat-toggle" onclick="toggleChat()">💬</button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
-                <div class="chat-status-dot"></div>
                 <h3>AI Ethics Assistant</h3>
                 <button class="chat-close" onclick="toggleChat()">×</button>
             </div>
+            <div class="setup-notice">
+                <strong>Note:</strong> For full AI functionality, run the Python backend (<code>python3 app.py</code>). This demo version provides simulated responses.
+            </div>
+            <div class="quick-topics">
+                <button class="quick-topic-btn" onclick="askAI('What are my data privacy rights in Ghana?')">Privacy Rights</button>
+                <button class="quick-topic-btn" onclick="askAI('Explain GDPR')">GDPR</button>
+                <button class="quick-topic-btn" onclick="askAI('What is algorithmic bias?')">Algorithmic Bias</button>
+                <button class="quick-topic-btn" onclick="askAI('How does encryption work?')">Encryption</button>
+                <button class="quick-topic-btn" onclick="askAI('What are dark patterns?')">Dark Patterns</button>
+            </div>
             <div class="chat-messages" id="chatMessages">
-                <div class="chat-empty-state" id="chatEmptyState">
-                    <div class="chat-empty-icon">◆</div>
-                    <p>Ask me anything about data ethics, Ghana's Data Protection Act, algorithmic bias, or digital rights.</p>
-                    <div class="chat-quick-chips">
-                        <button class="chat-chip" onclick="fillChatInput(this)">Privacy rights in Ghana</button>
-                        <button class="chat-chip" onclick="fillChatInput(this)">What is algorithmic bias?</button>
-                        <button class="chat-chip" onclick="fillChatInput(this)">SIM swap fraud tips</button>
-                        <button class="chat-chip" onclick="fillChatInput(this)">Explain GDPR</button>
-                    </div>
+                <div class="message assistant">
+                    Hello! I'm your AI assistant for data ethics. I can help you with both general data ethics topics (privacy, GDPR, algorithmic fairness, AI ethics, surveillance) and Ghana-specific matters (Data Protection Act, mobile money security, SIM swap fraud, reporting violations). What would you like to know?
                 </div>
             </div>
-            <div class="chat-typing" id="chatTyping">
-                <span class="chat-msg-label">Assistant</span>
-                <div class="chat-typing-dots"><span></span><span></span><span></span></div>
-            </div>
             <div class="chat-input-container">
-                <textarea
-                    class="chat-input"
-                    id="chatInput"
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="chatInput" 
                     placeholder="Ask about data ethics..."
-                    rows="1"
-                ></textarea>
-                <button class="chat-send" onclick="sendChatMessage()" id="sendBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                </button>
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="chat-send" onclick="sendMessage()" id="sendBtn">➤</button>
             </div>
         </div>
     </div>
@@ -1160,113 +1136,7 @@
             navLinks.classList.toggle('active');
         }
 
-        // ── Claude-powered chat ──────────────────────────────────────
-        const ANTHROPIC_API_KEY = ''; // ← Add your Anthropic API key here
-        const CHAT_MODEL = 'claude-sonnet-4-6';
-        const chatHistory = [];
-
-        const chatInputEl  = document.getElementById('chatInput');
-        const chatSendBtn  = document.getElementById('sendBtn');
-        const chatTyping   = document.getElementById('chatTyping');
-        const chatMsgsEl   = document.getElementById('chatMessages');
-        const chatEmpty    = document.getElementById('chatEmptyState');
-
-        // Auto-resize textarea
-        chatInputEl.addEventListener('input', () => {
-            chatInputEl.style.height = 'auto';
-            chatInputEl.style.height = Math.min(chatInputEl.scrollHeight, 100) + 'px';
-        });
-
-        chatInputEl.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendChatMessage();
-            }
-        });
-
-        function fillChatInput(btn) {
-            chatInputEl.value = btn.textContent;
-            chatInputEl.focus();
-        }
-
-        function askAI(question) {
-            const win = document.getElementById('chatWindow');
-            if (!win.classList.contains('active')) win.classList.add('active');
-            setTimeout(() => {
-                chatInputEl.value = question;
-                sendChatMessage();
-            }, 300);
-        }
-
-        function appendChatMessage(role, text) {
-            if (chatEmpty) chatEmpty.style.display = 'none';
-            const div = document.createElement('div');
-            div.className = `chat-msg ${role === 'user' ? 'user' : 'ai'}`;
-            div.innerHTML = `
-                <div class="chat-msg-label">${role === 'user' ? 'You' : 'Assistant'}</div>
-                <div class="chat-bubble">${escapeHtmlChat(text)}</div>
-            `;
-            chatMsgsEl.appendChild(div);
-            chatMsgsEl.scrollTop = chatMsgsEl.scrollHeight;
-        }
-
-        function escapeHtmlChat(str) {
-            return str
-                .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-                .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-        }
-
-        function setChatLoading(val) {
-            chatSendBtn.disabled = val;
-            chatTyping.classList.toggle('visible', val);
-            if (val) chatMsgsEl.scrollTop = chatMsgsEl.scrollHeight;
-        }
-
-        async function sendChatMessage() {
-            const text = chatInputEl.value.trim();
-            if (!text || chatSendBtn.disabled) return;
-
-            chatInputEl.value = '';
-            chatInputEl.style.height = 'auto';
-            appendChatMessage('user', text);
-            chatHistory.push({ role: 'user', content: text });
-            setChatLoading(true);
-
-            try {
-                const res = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': ANTHROPIC_API_KEY,
-                        'anthropic-version': '2023-06-01',
-                        'anthropic-dangerous-direct-browser-access': 'true'
-                    },
-                    body: JSON.stringify({
-                        model: CHAT_MODEL,
-                        max_tokens: 1024,
-                        system: 'You are a knowledgeable assistant specializing in data ethics, digital rights, and technology policy — with particular expertise in Ghana\'s Data Protection Act, the Cybersecurity Act, and broader African digital governance. Answer clearly and helpfully. When relevant, connect your answers to the Ghanaian context.',
-                        messages: chatHistory
-                    })
-                });
-
-                if (!res.ok) {
-                    const err = await res.json();
-                    throw new Error(err.error?.message || 'API error');
-                }
-
-                const data = await res.json();
-                const reply = data.content?.[0]?.text || 'No response.';
-                chatHistory.push({ role: 'assistant', content: reply });
-                setChatLoading(false);
-                appendChatMessage('assistant', reply);
-
-            } catch (err) {
-                setChatLoading(false);
-                appendChatMessage('assistant', `⚠ Error: ${err.message}`);
-            }
-        }
-
-        // ── Legacy knowledge-base placeholder (unused, kept for reference) ──
+        // Chat functionality with comprehensive AI knowledge base
         const knowledgeBase = {
             // Ghana-specific topics
             "privacy rights": "In Ghana, you have several important data privacy rights under the Data Protection Act, 2012 (Act 843):\n\n1. Right to Access: You can request to see what personal data organizations hold about you\n2. Right to Correction: You can request corrections to inaccurate information\n3. Right to Object: You can object to certain types of data processing\n4. Right to Data Portability: You can request your data in a portable format\n5. Right to Erasure: In certain circumstances, you can request deletion of your data\n\nTo exercise these rights, contact the data controller (the organization) or file a complaint with the Data Protection Commission.",
@@ -1328,7 +1198,117 @@
         };
 
         function toggleChat() {
-            document.getElementById('chatWindow').classList.toggle('active');
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function askAI(question) {
+            const chatWindow = document.getElementById('chatWindow');
+            if (!chatWindow.classList.contains('active')) {
+                chatWindow.classList.add('active');
+            }
+            
+            setTimeout(() => {
+                const input = document.getElementById('chatInput');
+                input.value = question;
+                sendMessage();
+            }, 300);
+        }
+
+        function findBestResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Check for direct keyword matches
+            for (const [key, response] of Object.entries(knowledgeBase)) {
+                if (lowerMessage.includes(key)) {
+                    return response;
+                }
+            }
+            
+            // Check for related terms
+            const relatedTerms = {
+                "gdpr": ["europe", "european", "eu data"],
+                "consent": ["permission", "agree", "opt-in"],
+                "encryption": ["encrypt", "secure", "security"],
+                "anonymization": ["anonymous", "anonymize", "de-identify"],
+                "bias": ["biased", "unfair", "discrimination", "discriminate"],
+                "fairness": ["fair", "equitable", "justice"],
+                "transparency": ["transparent", "open", "clear"],
+                "surveillance": ["monitoring", "tracking", "watching"],
+                "profiling": ["profile", "targeting", "personalization"],
+                "misinformation": ["fake news", "false information", "disinformation"],
+                "deepfake": ["deep fake", "synthetic media", "ai generated"],
+                "dark patterns": ["manipulative design", "deceptive"],
+                "cookies": ["cookie", "tracking"],
+                "two-factor authentication": ["2fa", "two factor", "authentication"],
+                "ethical ai": ["ai ethics", "responsible ai"]
+            };
+            
+            for (const [key, terms] of Object.entries(relatedTerms)) {
+                for (const term of terms) {
+                    if (lowerMessage.includes(term)) {
+                        return knowledgeBase[key];
+                    }
+                }
+            }
+            
+            // Provide helpful default response
+            return "I can help you with data ethics topics including:\n\n📋 General Data Ethics:\n• Privacy and consent\n• GDPR and international standards\n• Encryption and anonymization\n• Cookies and tracking\n• Two-factor authentication\n\n🤖 AI & Algorithms:\n• Algorithmic bias and fairness\n• Transparency and explainability\n• Ethical AI development\n\n🇬🇭 Ghana-Specific:\n• Data Protection Act 2012\n• Data Protection Commission\n• Cybersecurity Act 2020\n• Mobile money security\n• SIM swap fraud\n• Reporting violations\n\n⚠️ Information Misuse:\n• Surveillance and profiling\n• Misinformation and deepfakes\n• Dark patterns\n• Data breaches\n\nPlease ask me about any of these topics!";
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Show thinking indicator
+            const thinkingDiv = addMessage('Analyzing your question...', 'thinking');
+
+            // Disable send button
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
+
+            // Simulate AI response
+            setTimeout(() => {
+                thinkingDiv.remove();
+                const response = findBestResponse(message);
+                addMessage(response, 'assistant');
+                sendBtn.disabled = false;
+            }, 1000);
+        }
+
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            if (type === 'thinking') {
+                messageDiv.innerHTML = `
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                `;
+            } else {
+                messageDiv.textContent = text;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            return messageDiv;
         }
 
         // Smooth scrolling for navigation links
